@@ -1,11 +1,13 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { View, Button, Text } from "@tarojs/components";
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { View, Button, Text, Form, Switch, Input } from '@tarojs/components'
 
-import { add, minus, asyncAdd } from "../../actions/counter";
-import { fetchHomeData } from "../../actions/home";
+import { add, minus, asyncAdd } from '../../actions/counter'
+import { fetchHomeData } from '../../actions/home'
 
-import "./index.scss";
+import './index.scss'
+
+import PickView from '../../components/PickView'
 
 @connect(
   ({ counter, home }) => ({
@@ -17,23 +19,31 @@ import "./index.scss";
     minus,
     asyncAdd,
     fetchHomeData,
-  }
+  },
 )
 class Index extends Component {
   componentWillReceiveProps(nextProps) {
-    console.log(this.props, nextProps);
+    console.log(this.props, nextProps)
   }
 
   componentWillUnmount() {}
 
   componentDidShow() {
-    console.log(this.props);
+    console.log(this.props)
     this.props.fetchHomeData({
-      page: "home",
-    });
+      page: 'home',
+    })
   }
 
   componentDidHide() {}
+
+  formSubmit = (e) => {
+    console.log(e)
+  }
+
+  formReset = (e) => {
+    console.log(e)
+  }
 
   render() {
     return (
@@ -41,7 +51,7 @@ class Index extends Component {
         <Button className="add_btn" onClick={this.props.add}>
           +
         </Button>
-        <Button className="dec_btn" onClick={this.props.dec}>
+        <Button className="dec_btn" onClick={this.props.minus}>
           -
         </Button>
         <Button className="dec_btn" onClick={this.props.asyncAdd}>
@@ -53,9 +63,16 @@ class Index extends Component {
         <View>
           <Text>{this.props.home.list.map((item) => item?.name)}</Text>
         </View>
+        <Form onSubmit={this.formSubmit} onReset={this.formReset}>
+          <View className="example-body">
+            <Switch name="switch" className="form-switch"></Switch>
+          </View>
+          <Button formType="submit">提交</Button>
+        </Form>
+        <PickView />
       </View>
-    );
+    )
   }
 }
 
-export default Index;
+export default Index
