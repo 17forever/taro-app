@@ -1,13 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { View, Button, Text, Form, Switch, Input } from '@tarojs/components'
-
 import { add, minus, asyncAdd } from '../../actions/counter'
 import { fetchHomeData } from '../../actions/home'
-
-import './index.scss'
-
 import PickView from '../../components/PickView'
+import wx from '../../lib/wx'
+import './index.scss'
 
 @connect(
   ({ counter, home }) => ({
@@ -29,6 +27,7 @@ class Index extends Component {
   componentWillUnmount() {}
 
   componentDidShow() {
+    console.log(wx)
     console.log(this.props)
     this.props.fetchHomeData({
       page: 'home',
